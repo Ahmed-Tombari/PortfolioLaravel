@@ -1,64 +1,102 @@
 @extends('admin.layout.main')
-@section('page_title', 'New Category')
-@section('page_subtitle', 'Add a new portfolio category')
+@section('page_title', isset($category) ? 'Edit Category' : 'New Category')
+
+@section('styles')
+<style>
+.admin-input {
+    width: 100%;
+    padding: 11px 16px;
+    background: rgba(248,250,252,0.8);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #1e293b;
+    transition: all 0.25s;
+    outline: none;
+    font-family: inherit;
+}
+.admin-input:focus {
+    border-color: #a855f7;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(168,85,247,0.12);
+}
+.admin-input::placeholder { color: #94a3b8; }
+.admin-input.error { border-color: #f43f5e; box-shadow: 0 0 0 4px rgba(244,63,94,0.1); }
+</style>
+@endsection
+
 @section('content')
+@php $isEdit = isset($category); @endphp
 
-@php
-    $isEdit = isset($category);
-@endphp
+<div class="space-y-6 animate-fade-up">
 
-<div class="flex items-center justify-between mb-10">
+    {{-- Back --}}
     <a href="{{ route('admin.category.index') }}"
-       class="inline-flex items-center gap-3 text-xs font-black uppercase tracking-widest text-slate-400 hover:text-teal-600 transition-colors group">
-        <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-        Taxonomy Master
+       class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-violet-600 transition-colors group">
+        <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        Back to categories
     </a>
-</div>
 
-<div class="max-w-2xl">
-    <div class="aurora-card p-8 lg:p-12">
-        <div class="flex items-center justify-between mb-10">
-            <div>
-                <p class="text-[10px] font-black uppercase tracking-[0.3em] text-teal-600 mb-2">Structural Definition</p>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight">{{ $isEdit ? 'Modify Segment' : 'New Segment' }}</h2>
-            </div>
-            <div class="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-200">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-            </div>
-        </div>
-
-        <form action="{{ route('admin.category.' . ($isEdit ? 'update' : 'store'), $isEdit ? $category->id : null) }}" method="POST" class="space-y-10">
-            @csrf
-            @if($isEdit) @method('PUT') @endif
-
-            <div>
-                <label class="admin-label">Designation <span class="text-teal-500">*</span></label>
-                <input type="text" name="name"
-                       value="{{ old('name', $category->name ?? '') }}"
-                       class="admin-input @error('name') border-rose-400 ring-4 ring-rose-400/5 focus:border-rose-500 @enderror text-lg font-extrabold"
-                       placeholder="e.g., Motion Design"
-                       required>
-                <div class="mt-4 flex items-center gap-2 group/tip">
-                    <div class="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover/tip:bg-teal-500 transition-colors"></div>
-                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">URL segment will be generated from this designation</p>
+    <div class="max-w-xl">
+        <div class="craftable-card p-6 lg:p-8">
+            {{-- Card Header --}}
+            <div class="flex items-center gap-3 mb-6 pb-5 border-b border-slate-100">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 6h.008v.008H6V6z"/></svg>
                 </div>
-                @error('name') <p class="text-rose-500 text-[11px] font-bold mt-3 ml-1 uppercase tracking-wider">{{ $message }}</p> @enderror
+                <div>
+                    <h3 class="text-base font-bold text-slate-800">{{ $isEdit ? 'Edit Category' : 'New Category' }}</h3>
+                    <p class="text-xs text-slate-400 mt-0.5">{{ $isEdit ? 'Update your category details' : 'Define a new category for your projects' }}</p>
+                </div>
             </div>
 
-            <div class="flex items-center justify-between gap-6 pt-6 border-t border-slate-50">
-                <a href="{{ route('admin.category.index') }}"
-                   class="px-8 py-4 rounded-xl text-slate-400 text-xs font-black uppercase tracking-widest hover:text-slate-900 hover:bg-slate-50 transition-all">
-                    Discard
-                </a>
-                <button type="submit"
-                    class="inline-flex items-center gap-3 px-10 py-4 aurora-gradient text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-teal-500/20 hover:scale-105 active:scale-95 transition-all">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="{{ $isEdit ? 'M5 13l4 4L19 7' : 'M12 4v16m8-8H4' }}"/>
-                    </svg>
-                    {{ $isEdit ? 'Update Segment' : 'Establish Segment' }}
-                </button>
-            </div>
-        </form>
+            <form action="{{ route('admin.category.' . ($isEdit ? 'update' : 'store'), $isEdit ? $category->id : null) }}"
+                  method="POST" class="space-y-5">
+                @csrf
+                @if($isEdit) @method('PUT') @endif
+
+                <div>
+                    <label class="aurora-label">Category Name <span class="text-rose-500">*</span></label>
+                    <input type="text" name="name"
+                           value="{{ old('name', $category->name ?? '') }}"
+                           class="admin-input @error('name') error @enderror"
+                           placeholder="e.g., Motion Design, Web Development..."
+                           autofocus required>
+                    <p class="text-xs text-slate-400 mt-1.5">A URL-friendly slug will be auto-generated from this name.</p>
+                    @error('name')
+                    <p class="flex items-center gap-1.5 text-xs text-rose-500 font-medium mt-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        {{ $message }}
+                    </p>
+                    @enderror
+                </div>
+
+                {{-- Preview slug --}}
+                @if($isEdit && $category->slug)
+                <div class="px-4 py-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+                    <span class="text-xs text-slate-500">Current slug:</span>
+                    <span class="text-xs text-violet-600 font-mono font-semibold">{{ $category->slug }}</span>
+                </div>
+                @endif
+
+                <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                    <a href="{{ route('admin.category.index') }}" class="btn-secondary">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn-primary">
+                        @if($isEdit)
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Save Changes
+                        @else
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            Create Category
+                        @endif
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+
 </div>
 @endsection
