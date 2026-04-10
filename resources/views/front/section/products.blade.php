@@ -11,9 +11,9 @@
         <!-- ─── Header Row ─── -->
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
             <div>
-                <span class="text-primary-600 font-semibold uppercase tracking-wider text-sm mb-3 block">Selected Works</span>
+                <span class="text-primary-600 font-semibold uppercase tracking-wider text-sm mb-3 block">{{ __('Selected Works') }}</span>
                 <h2 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight">
-                    My Latest <span class="text-primary-600">Creations.</span>
+                    {{ __('My Latest') }} <span class="text-primary-600">{{ __('Creations.') }}</span>
                 </h2>
             </div>
 
@@ -24,7 +24,7 @@
                         ? 'bg-primary-600 text-white border-primary-600 shadow-premium'
                         : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-primary-400'"
                     class="px-5 py-2.5 rounded-full text-sm font-medium border transition-all duration-300">
-                    All Work
+                    {{ __('All Work') }}
                 </button>
                 @foreach($categories as $cat)
                 <button @click="filter('{{ $cat->id }}')"
@@ -101,7 +101,7 @@
             </div>
             @empty
             <div class="col-span-full py-24 text-center bg-white dark:bg-slate-900 rounded-[2rem] border border-slate-200 dark:border-slate-800">
-                <p class="text-slate-500 text-lg font-light">No projects yet — something great is on the way.</p>
+                <p class="text-slate-500 text-lg font-light">{{ __('No projects yet — something great is on the way.') }}</p>
             </div>
             @endforelse
         </div>

@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
+      class="scroll-smooth"
+      x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }"
+      :class="{ 'dark': darkMode }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +16,15 @@
     <!-- Vite Directives -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
+
+    <!-- Dark Mode Initializer (Prevents Flicker) -->
+    <script>
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     
     <style>
         @keyframes heroFadeInUp {
@@ -48,7 +61,7 @@
         }
     </style>
 </head>
-<body class="font-sans antialiased text-slate-900 bg-zinc-50 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 noise-bg" x-data="{ scrolled: false, mobileMenuOpen: false }" @scroll.window="scrolled = (window.pageYOffset > 50)">
+<body class="font-sans antialiased text-slate-900 bg-zinc-50 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 noise-bg" x-data="{ scrolled: false, mobileMenuOpen: false }" @scroll.window="scrolled = (window.pageYOffset > 50)" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))">
     <div class="mesh-gradient"></div>
 
     <!-- Progress Bar -->
@@ -75,19 +88,63 @@
                     <a href="{{ route('portfolio') }}" class="text-xs font-semibold uppercase tracking-widest hover:text-primary-600 transition-colors {{ request()->routeIs('portfolio') ? 'text-primary-600' : 'text-slate-600 dark:text-slate-300' }}">Portfolio</a>
                     <a href="{{ route('contact') }}" class="text-xs font-semibold uppercase tracking-widest hover:text-primary-600 transition-colors {{ request()->routeIs('contact') ? 'text-primary-600' : 'text-slate-600 dark:text-slate-300' }}">Contact</a>
                     
+                    
+                    <!-- Localization Switcher -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" 
+                                class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-primary-600 transition-all duration-300 border border-transparent flex items-center gap-1.5"
+                                aria-label="Language Switcher">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.298 6 18" /></svg>
+                            <span class="text-[10px] font-bold uppercase tracking-widest">{{ app()->getLocale() }}</span>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div x-show="open" 
+                             @click.away="open = false"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                             class="absolute right-0 mt-2 w-48 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-premium py-2 px-2 z-[60]">
+                            <a href="{{ route('set.locale', ['locale' => 'en']) }}" class="flex items-center gap-3 px-4 py-3 text-xs font-semibold uppercase tracking-widest rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'en' ? 'text-primary-600' : 'text-slate-600 dark:text-slate-300' }}">
+                                <span class="text-base text-black dark:text-white">🇺🇸</span> {{ __('English') }}
+                            </a>
+                            <a href="{{ route('set.locale', ['locale' => 'fr']) }}" class="flex items-center gap-3 px-4 py-3 text-xs font-semibold uppercase tracking-widest rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'fr' ? 'text-primary-600' : 'text-slate-600 dark:text-slate-300' }}">
+                                <span class="text-base text-black dark:text-white">🇫🇷</span> {{ __('French') }}
+                            </a>
+                            <a href="{{ route('set.locale', ['locale' => 'ar']) }}" class="flex items-center gap-3 px-4 py-3 text-xs font-semibold uppercase tracking-widest rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'ar' ? 'text-primary-600' : 'text-slate-600 dark:text-slate-300' }}">
+                                <span class="text-base text-black dark:text-white">🇸🇦</span> {{ __('Arabic') }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Theme Switcher -->
+                    <button @click="darkMode = !darkMode" 
+                            class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-primary-600 transition-all duration-300 border border-transparent"
+                            aria-label="Toggle Dark Mode">
+                        <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                        <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    </button>
+
                     @auth
                         <a href="{{ route('dashboard') }}" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg transition-transform hover:-translate-y-0.5 ml-4">
-                            Dashboard
+                            {{ __('Dashboard') }}
                         </a>
                     @else
                         <a href="{{ route('login') }}" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg transition-transform hover:-translate-y-0.5 ml-4">
-                            Login
+                            {{ __('Log in') }}
                         </a>
                     @endauth
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="flex items-center md:hidden">
+                <!-- Mobile Controls (Language + Theme) -->
+                <div class="flex items-center md:hidden gap-3">
+                    <a href="{{ route('set.locale', ['locale' => app()->getLocale() == 'en' ? 'fr' : (app()->getLocale() == 'fr' ? 'ar' : 'en')]) }}" class="p-2 text-xs font-bold border border-slate-200 dark:border-slate-800 rounded-xl text-slate-500 uppercase">
+                        {{ app()->getLocale() == 'en' ? 'FR' : (app()->getLocale() == 'fr' ? 'AR' : 'EN') }}
+                    </a>
+                    <button @click="darkMode = !darkMode" 
+                            class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors border border-transparent">
+                        <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                        <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    </button>
                     <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-slate-600 dark:text-slate-300 hover:text-primary-600 focus:outline-none">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -101,16 +158,16 @@
         <!-- Mobile Menu Panel -->
         <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden absolute w-full bg-white/95 backdrop-blur-xl dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 shadow-premium" style="display: none;">
             <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="{{ route('home') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('home') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">Home</a>
-                <a href="{{ route('about') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('about') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">About</a>
-                <a href="{{ route('services') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('services') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">Services</a>
-                <a href="{{ route('portfolio') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('portfolio') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">Portfolio</a>
-                <a href="{{ route('contact') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('contact') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">Contact</a>
+                <a href="{{ route('home') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('home') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">{{ __('Home') }}</a>
+                <a href="{{ route('about') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('about') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">{{ __('About') }}</a>
+                <a href="{{ route('services') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('services') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">{{ __('Services') }}</a>
+                <a href="{{ route('portfolio') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('portfolio') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">{{ __('Portfolio') }}</a>
+                <a href="{{ route('contact') }}" class="block px-3 py-2 rounded-2xl text-base font-medium {{ request()->routeIs('contact') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800' }}">{{ __('Contact') }}</a>
                 <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
                     @auth
-                        <a href="{{ route('dashboard') }}" class="block w-full text-center px-5 py-2.5 bg-slate-900 text-white rounded-2xl font-medium">Dashboard</a>
+                        <a href="{{ route('dashboard') }}" class="block w-full text-center px-5 py-2.5 bg-slate-900 text-white rounded-2xl font-medium">{{ __('Dashboard') }}</a>
                     @else
-                        <a href="{{ route('login') }}" class="block w-full text-center px-5 py-2.5 bg-slate-900 text-white rounded-2xl font-medium">Login</a>
+                        <a href="{{ route('login') }}" class="block w-full text-center px-5 py-2.5 bg-slate-900 text-white rounded-2xl font-medium">{{ __('Log in') }}</a>
                     @endauth
                 </div>
             </div>

@@ -17,11 +17,11 @@ Route::get('/contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('/category/{slug}', [FrontController::class, 'category'])->name('category.show');
 
 // Locale & RTL Routes
-Route::get('/set-locale/{locale}/{rtl?}', function ($locale, $rtl = false) {
-    if (in_array($locale, ['en', 'fr'])) {
+Route::get('/set-locale/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'fr', 'ar'])) {
         session(['locale' => $locale]);
+        session(['rtl' => $locale === 'ar']);
     }
-    session(['rtl' => (bool)$rtl]);
     return back();
 })->name('set.locale');
 

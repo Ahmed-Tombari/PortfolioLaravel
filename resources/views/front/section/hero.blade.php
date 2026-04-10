@@ -22,23 +22,23 @@
         {{-- Badge --}}
         <div class="hero-fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-primary-600 dark:text-primary-400 text-xs font-semibold uppercase tracking-widest mb-10 shadow-sm" style="animation-delay:0.1s">
             <span class="w-2 h-2 rounded-full bg-primary-500 animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
-            Available for Projects
+            {{ __('Available for Projects') }}
         </div>
 
         {{-- Main Headline --}}
         <h1 class="hero-fade-in font-bold tracking-tight text-slate-900 dark:text-white mb-8 leading-[1.1]"
             style="font-size: clamp(2.5rem, 6vw, 5.5rem); animation-delay:0.2s">
-            {{ $hero->title ?? 'Creative' }}<br>
+            {{ $hero->title ?? __('Creative') }}<br>
             <span class="relative inline-block">
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-indigo-400 dark:from-primary-400 dark:via-primary-500 dark:to-indigo-300">
-                    {{ $hero->subtitle ?? 'Developer' }}
+                    {{ $hero->subtitle ?? __('Developer') }}
                 </span>
             </span>
         </h1>
 
         {{-- Sub-headline --}}
         <p class="hero-fade-in text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl font-light leading-relaxed mb-14" style="animation-delay:0.35s">
-            Designing and building high-performance digital experiences with a focus on minimalist aesthetics and robust engineering.
+            {{ __('Designing and building high-performance digital experiences with a focus on minimalist aesthetics and robust engineering.') }}
         </p>
 
         {{-- CTA Buttons --}}
@@ -46,13 +46,13 @@
             <a href="{{ $hero->btn_url ?? route('portfolio') }}"
                class="group relative px-8 py-3.5 bg-slate-900 dark:bg-primary-600 text-white rounded-full font-semibold tracking-wide overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5">
                 <span class="relative z-10 flex items-center gap-2">
-                    {{ $hero->btn_text ?? 'View My Work' }}
+                    {{ $hero->btn_text ?? __('View My Work') }}
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </span>
             </a>
             <a href="{{ route('about') }}"
                class="px-8 py-3.5 bg-white dark:bg-transparent border border-slate-200 dark:border-slate-800 hover:border-primary-600 dark:hover:border-slate-600 text-slate-900 dark:text-slate-300 hover:text-primary-600 dark:hover:text-white rounded-full font-semibold tracking-wide transition-all duration-300 shadow-sm hover:shadow-md">
-                About Me
+                {{ __('About Me') }}
             </a>
         </div>
     </div>
@@ -66,7 +66,7 @@
                     : 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2670&auto=format&fit=crop';
              @endphp
              <img src="{{ $heroImageUrl }}" 
-                  alt="Modern Visual" 
+                  alt="{{ __('Modern Visual') }}" 
                   class="w-full h-full object-cover grayscale-[0.2] transition-transform duration-1000 group-hover:scale-105"
                   onerror="this.src='https://placehold.co/800x1000/312e81/ffffff?text=Portfolio+Visual'">
              
@@ -79,8 +79,8 @@
                          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                      </div>
                      <div>
-                         <p class="text-[10px] uppercase tracking-widest text-primary-400 font-bold mb-0.5">Status</p>
-                         <p class="text-sm text-white font-medium">Ready for new challenges</p>
+                         <p class="text-[10px] uppercase tracking-widest text-primary-400 font-bold mb-0.5">{{ __('Status') }}</p>
+                         <p class="text-sm text-white font-medium">{{ __('Ready for new challenges') }}</p>
                      </div>
                  </div>
              </div>
@@ -93,7 +93,7 @@
 
     {{-- Scroll cue --}}
     <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce opacity-40">
-        <span class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Scroll</span>
+        <span class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">{{ __('Scroll') }}</span>
         <div class="w-[1px] h-8 bg-gradient-to-b from-slate-400 to-transparent"></div>
     </div>
 </section>

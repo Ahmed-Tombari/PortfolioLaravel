@@ -1,7 +1,7 @@
 {{-- ─── Tech Stack Marquee ─── --}}
 <section class="py-12 border-y border-slate-200 dark:border-slate-800 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm overflow-hidden relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-[10px] uppercase tracking-[0.4em] font-black text-slate-400 dark:text-slate-600 mb-8">Powering My Solutions With</p>
+        <p class="text-center text-[10px] uppercase tracking-[0.4em] font-black text-slate-400 dark:text-slate-600 mb-8">{{ __('Powering My Solutions With') }}</p>
         
         <div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
             @php

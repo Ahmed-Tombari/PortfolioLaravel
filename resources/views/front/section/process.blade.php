@@ -5,19 +5,19 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="flex flex-col lg:flex-row gap-20 items-center">
             <div class="w-full lg:w-1/2" x-data="{ intersecting: false }" x-intersect.once="intersecting = true" :class="intersecting ? 'animate-fade-in-up' : 'opacity-0 translate-y-8'">
-                <span class="text-primary-400 font-semibold uppercase tracking-widest text-sm mb-4 block">How I Work</span>
+                <span class="text-primary-400 font-semibold uppercase tracking-widest text-sm mb-4 block">{{ __('How I Work') }}</span>
                 <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-8 leading-tight">
-                    A Proven Path <br> From <span class="text-primary-400">Concept to Code.</span>
+                    {{ __('A Proven Path') }} <br> {{ __('From') }} <span class="text-primary-400">{{ __('Concept to Code.') }}</span>
                 </h2>
                 <p class="text-slate-400 text-lg font-light leading-relaxed mb-12">
-                    I follow a structured methodology designed to ensure every project is delivered with the highest standards of quality, performance, and user delight.
+                    {{ __('I follow a structured methodology designed to ensure every project is delivered with the highest standards of quality, performance, and user delight.') }}
                 </p>
                 <div class="flex flex-col gap-6">
                     @php
                         $steps = [
-                            ['num' => '01', 'title' => 'Discovery', 'desc' => 'We dive deep into your goals, audience, and technical needs.'],
-                            ['num' => '02', 'title' => 'Design', 'desc' => 'Creating minimalist prototypes that focus on UX and clarity.'],
-                            ['num' => '03', 'title' => 'Develop', 'desc' => 'Writing clean, scalable code using the best modern practices.'],
+                            ['num' => '01', 'title' => __('Discovery'), 'desc' => __('We dive deep into your goals, audience, and technical needs.')],
+                            ['num' => '02', 'title' => __('Design'), 'desc' => __('Creating minimalist prototypes that focus on UX and clarity.')],
+                            ['num' => '03', 'title' => __('Develop'), 'desc' => __('Writing clean, scalable code using the best modern practices.')],
                         ];
                     @endphp
                     @foreach($steps as $step)
@@ -34,7 +34,7 @@
             
             <div class="w-full lg:w-1/2 relative" x-data="{ intersecting: false }" x-intersect.once="intersecting = true" :class="intersecting ? 'animate-fade-in-up delay-300' : 'opacity-0 translate-y-8'">
                 <div class="relative rounded-[3rem] overflow-hidden border border-slate-700 shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2670&auto=format&fit=crop" alt="Development Process" class="w-full h-full object-cover grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2670&auto=format&fit=crop" alt="{{ __('Development Process') }}" class="w-full h-full object-cover grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                 </div>
                 
@@ -44,9 +44,9 @@
                         <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center text-primary-600">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
-                        <h5 class="text-slate-900 dark:text-white font-bold">Fast Delivery</h5>
+                        <h5 class="text-slate-900 dark:text-white font-bold">{{ __('Fast Delivery') }}</h5>
                     </div>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-light">Optimized workflows that don't compromise on quality.</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm font-light">{{ __('Optimized workflows that don\'t compromise on quality.') }}</p>
                 </div>
             </div>
         </div>

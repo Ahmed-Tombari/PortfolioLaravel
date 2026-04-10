@@ -59,19 +59,19 @@
 
         <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
-                <p class="text-purple-200/80 text-sm font-medium mb-1">👋 Welcome back</p>
+                <p class="text-purple-200/80 text-sm font-medium mb-1">👋 {{ __('Welcome back') }}</p>
                 <h2 class="text-3xl font-bold text-white mb-2">
                     {{ explode(' ', Auth::user()->name)[0] }}
                 </h2>
                 <p class="text-white/60 text-sm max-w-md">
-                    Your portfolio is looking great. Here's a quick snapshot of everything in your studio.
+                    {{ __('Your portfolio is looking great. Here\'s a quick snapshot of everything in your studio.') }}
                 </p>
             </div>
             <div class="flex items-center gap-3">
                 <a href="{{ route('admin.product.create') }}"
                    class="flex items-center gap-2 px-5 py-2.5 bg-white/20 hover:bg-white/30 backdrop-blur text-white text-sm font-semibold rounded-xl border border-white/25 transition-all hover:scale-105">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                    New Project
+                    {{ __('New Project') }}
                 </a>
             </div>
         </div>
@@ -80,15 +80,15 @@
         <div class="relative z-10 mt-8 flex flex-row items-center bg-black/10 rounded-2xl p-5 border border-white/10 shadow-inner">
             <div class="text-center flex-1">
                 <p class="text-3xl font-bold text-white count-num">{{ $productCount }}</p>
-                <p class="text-white/55 text-xs font-medium mt-0.5">Projects</p>
+                <p class="text-white/55 text-xs font-medium mt-0.5">{{ __('Projects') }}</p>
             </div>
             <div class="text-center flex-1 border-x border-white/15">
                 <p class="text-3xl font-bold text-white count-num" style="animation-delay:0.1s">{{ $categoryCount }}</p>
-                <p class="text-white/55 text-xs font-medium mt-0.5">Categories</p>
+                <p class="text-white/55 text-xs font-medium mt-0.5">{{ __('Categories') }}</p>
             </div>
             <div class="text-center flex-1">
                 <p class="text-3xl font-bold text-white count-num" style="animation-delay:0.2s">{{ $heroCount > 0 ? '✓' : '—' }}</p>
-                <p class="text-white/55 text-xs font-medium mt-0.5">Hero Active</p>
+                <p class="text-white/55 text-xs font-medium mt-0.5">{{ __('Hero Active') }}</p>
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
         <div class="stat-card stat-card-violet card-animate">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">Total Projects</p>
+                    <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">{{ __('Total Projects') }}</p>
                     <h2 class="text-4xl font-black text-white leading-none count-num">{{ $productCount }}</h2>
                 </div>
                 <div class="stat-icon-box">
@@ -114,10 +114,10 @@
                 <div class="h-full bg-white/60 rounded-full progress-bar" style="width: {{ min(100, $productCount * 10) }}%"></div>
             </div>
             <div class="flex items-center justify-between">
-                <span class="text-white/60 text-xs">Portfolio capacity</span>
+                <span class="text-white/60 text-xs">{{ __('Portfolio capacity') }}</span>
                 <a href="{{ route('admin.product.index') }}"
                    class="text-white/80 hover:text-white text-xs font-semibold flex items-center gap-1 transition-colors">
-                    View all <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    {{ __('View all') }} <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
         </div>
@@ -126,7 +126,7 @@
         <div class="stat-card stat-card-indigo card-animate">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">Categories</p>
+                    <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">{{ __('Categories') }}</p>
                     <h2 class="text-4xl font-black text-white leading-none count-num" style="animation-delay:0.08s">{{ $categoryCount }}</h2>
                 </div>
                 <div class="stat-icon-box">
@@ -140,10 +140,10 @@
                 <div class="h-full bg-white/60 rounded-full progress-bar" style="width: {{ min(100, $categoryCount * 15) }}%"></div>
             </div>
             <div class="flex items-center justify-between">
-                <span class="text-white/60 text-xs">Active groupings</span>
+                <span class="text-white/60 text-xs">{{ __('Active groupings') }}</span>
                 <a href="{{ route('admin.category.index') }}"
                    class="text-white/80 hover:text-white text-xs font-semibold flex items-center gap-1 transition-colors">
-                    Manage <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    {{ __('Manage') }} <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
         </div>
@@ -152,9 +152,9 @@
         <div class="stat-card {{ $heroCount > 0 ? 'stat-card-rose' : 'stat-card-amber' }} card-animate">
             <div class="flex items-start justify-between mb-4">
                 <div>
-                    <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">Hero Section</p>
+                    <p class="text-white/60 text-xs font-semibold uppercase tracking-widest mb-1">{{ __('Hero Section') }}</p>
                     <h2 class="text-4xl font-black text-white leading-none count-num" style="animation-delay:0.16s">
-                        {{ $heroCount > 0 ? 'Live' : 'Empty' }}
+                        {{ $heroCount > 0 ? __('Live') : __('Empty') }}
                     </h2>
                 </div>
                 <div class="stat-icon-box">
@@ -170,13 +170,13 @@
                 @if($heroCount == 0)
                     <a href="{{ route('admin.hero.create') }}"
                        class="text-white/80 hover:text-white text-xs font-semibold flex items-center gap-1 transition-colors">
-                        + Add Hero Section
+                        + {{ __('Add Hero Section') }}
                     </a>
                 @else
-                    <span class="text-white/60 text-xs">Configured & active</span>
+                    <span class="text-white/60 text-xs">{{ __('Configured & active') }}</span>
                     <a href="{{ route('admin.hero.index') }}"
                        class="text-white/80 hover:text-white text-xs font-semibold flex items-center gap-1 transition-colors">
-                        Edit <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        {{ __('Edit') }} <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </a>
                 @endif
             </div>
@@ -190,12 +190,12 @@
         <div class="lg:col-span-2 craftable-card p-6">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-base font-bold text-slate-800">Portfolio Performance</h3>
-                    <p class="text-xs text-slate-400 font-medium mt-0.5">Monthly project activity</p>
+                    <h3 class="text-base font-bold text-slate-800 dark:text-white">{{ __('Portfolio Performance') }}</h3>
+                    <p class="text-xs text-slate-400 font-medium mt-0.5">{{ __('Monthly project activity') }}</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span class="px-3 py-1.5 bg-gradient-to-r from-violet-50 to-indigo-50 text-violet-700 rounded-xl text-xs font-semibold border border-violet-100">
-                        Last 8 months
+                    <span class="px-3 py-1.5 bg-gradient-to-r from-violet-50 to-indigo-50 dark:from-violet-950 dark:to-indigo-950 text-violet-700 dark:text-violet-300 rounded-xl text-xs font-semibold border border-violet-100 dark:border-violet-800">
+                        {{ __('Last 8 months') }}
                     </span>
                 </div>
             </div>
@@ -205,8 +205,8 @@
         {{-- Donut Chart --}}
         <div class="lg:col-span-1 craftable-card p-6 flex flex-col">
             <div class="mb-5">
-                <h3 class="text-base font-bold text-slate-800">Categories</h3>
-                <p class="text-xs text-slate-400 font-medium mt-0.5">Project distribution</p>
+                <h3 class="text-base font-bold text-slate-800 dark:text-white">{{ __('Categories') }}</h3>
+                <p class="text-xs text-slate-400 font-medium mt-0.5">{{ __('Project distribution') }}</p>
             </div>
 
             <div id="auroraDistributionChart" class="flex-1 flex items-center justify-center min-h-[180px]"></div>
@@ -237,7 +237,7 @@
     {{-- ─── Quick Actions ─── --}}
     <div class="animate-fade-up-4">
         <div class="flex items-center justify-between mb-4">
-            <h3 class="text-base font-bold text-slate-800">Quick Actions</h3>
+            <h3 class="text-base font-bold text-slate-800 dark:text-white">{{ __('Quick Actions') }}</h3>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
@@ -247,8 +247,8 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4v16m8-8H4"/></svg>
                 </div>
                 <div>
-                    <p class="text-sm font-bold text-slate-800 group-hover:text-violet-700 transition-colors">Add Project</p>
-                    <p class="text-xs text-slate-400 mt-0.5">Create new portfolio item</p>
+                    <p class="text-sm font-bold text-slate-800 dark:text-white group-hover:text-violet-700 transition-colors">{{ __('Add Project') }}</p>
+                    <p class="text-xs text-slate-400 mt-0.5">{{ __('Create new portfolio item') }}</p>
                 </div>
             </a>
 
@@ -258,8 +258,8 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
                 </div>
                 <div>
-                    <p class="text-sm font-bold text-slate-800 group-hover:text-indigo-700 transition-colors">New Category</p>
-                    <p class="text-xs text-slate-400 mt-0.5">Organize your work</p>
+                    <p class="text-sm font-bold text-slate-800 dark:text-white group-hover:text-indigo-700 transition-colors">{{ __('New Category') }}</p>
+                    <p class="text-xs text-slate-400 mt-0.5">{{ __('Organize your work') }}</p>
                 </div>
             </a>
 
@@ -269,8 +269,8 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
                 </div>
                 <div>
-                    <p class="text-sm font-bold text-slate-800 group-hover:text-rose-600 transition-colors">Hero Section</p>
-                    <p class="text-xs text-slate-400 mt-0.5">Manage hero banners</p>
+                    <p class="text-sm font-bold text-slate-800 dark:text-white group-hover:text-rose-600 transition-colors">{{ __('Hero Section') }}</p>
+                    <p class="text-xs text-slate-400 mt-0.5">{{ __('Manage hero banners') }}</p>
                 </div>
             </a>
 
@@ -280,8 +280,8 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
                 </div>
                 <div>
-                    <p class="text-sm font-bold text-slate-800 group-hover:text-sky-600 transition-colors">View Website</p>
-                    <p class="text-xs text-slate-400 mt-0.5">Open frontend live</p>
+                    <p class="text-sm font-bold text-slate-800 dark:text-white group-hover:text-sky-600 transition-colors">{{ __('View Website') }}</p>
+                    <p class="text-xs text-slate-400 mt-0.5">{{ __('Open frontend live') }}</p>
                 </div>
             </a>
 
@@ -304,16 +304,22 @@
             sky:    '#0ea5e9',
             teal:   '#14b8a6',
         };
-        const textColor = '#64748b';
-        const gridColor = '#f1f5f9';
+        const isDark = document.documentElement.classList.contains('dark');
+        const textColor = isDark ? '#94a3b8' : '#64748b';
+        const gridColor = isDark ? 'rgba(255,255,255,0.05)' : '#f1f5f9';
+        const tooltipTheme = isDark ? 'dark' : 'light';
 
         // ─── Performance Chart ───
+@php
+    $translatedProjectsAdded = __('Projects Added');
+    $translatedCategoryGrowth = __('Category Growth');
+@endphp
         const perfOptions = {
             series: [{
-                name: 'Projects Added',
+                name: '{{ $translatedProjectsAdded }}',
                 data: [12, 24, 18, 38, 29, 52, 43, {{ $productCount > 0 ? $productCount : 28 }}]
             }, {
-                name: 'Category Growth',
+                name: '{{ $translatedCategoryGrowth }}',
                 data: [4, 6, 5, 9, 7, 11, 10, {{ $categoryCount > 0 ? $categoryCount : 6 }}]
             }],
             chart: {
@@ -322,6 +328,7 @@
                 toolbar: { show: false },
                 background: 'transparent',
                 fontFamily: 'Inter, sans-serif',
+                theme: isDark ? 'dark' : 'light',
                 animations: {
                     enabled: true,
                     easing: 'easeinout',
@@ -371,7 +378,7 @@
                 labels: { colors: textColor }
             },
             tooltip: {
-                theme: 'light',
+                theme: tooltipTheme,
                 style: { fontSize: '12px', fontFamily: 'Inter, sans-serif' }
             }
         };
@@ -420,7 +427,7 @@
                 }
             },
             tooltip: {
-                theme: 'light',
+                theme: tooltipTheme,
                 style: { fontSize: '12px', fontFamily: 'Inter, sans-serif' }
             }
         };

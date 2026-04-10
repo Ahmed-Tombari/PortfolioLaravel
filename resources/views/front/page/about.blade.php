@@ -1,6 +1,6 @@
 @extends('front.layout.main')
 
-@section('title', 'About Me')
+@section('title', __('About Me'))
 
 @section('content')
     <section id="about-hero" class="relative pt-40 pb-20 overflow-hidden bg-slate-50 dark:bg-slate-950">
@@ -9,13 +9,13 @@
         <div class="absolute top-1/4 right-0 w-[600px] h-[600px] bg-primary-600/10 blur-[150px] rounded-full pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <span class="hero-fade-in block text-sm font-semibold uppercase tracking-wider text-primary-600 mb-6" style="animation-delay:0.1s">Behind The Code</span>
+            <span class="hero-fade-in block text-sm font-semibold uppercase tracking-wider text-primary-600 mb-6" style="animation-delay:0.1s">{{ __('Behind The Code') }}</span>
             <h1 class="hero-fade-in text-5xl sm:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight" style="animation-delay:0.2s">
-                The Architect Behind<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-400 dark:from-primary-400 dark:to-indigo-300">The Screen.</span>
+                {{ __('The Architect Behind') }}<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-400 dark:from-primary-400 dark:to-indigo-300">{{ __('The Screen.') }}</span>
             </h1>
             <p class="hero-fade-in text-slate-600 dark:text-slate-400 max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed" style="animation-delay:0.35s">
-                I'm a solution-oriented developer with a passion for building high-performance web applications. My journey started with a curiosity for how things work, and it evolved into a career dedicated to crafting modern digital excellence.
+                {{ __('I\'m a solution-oriented developer with a passion for building high-performance web applications. My journey started with a curiosity for how things work, and it evolved into a career dedicated to crafting modern digital excellence.') }}
             </p>
         </div>
     </section>
@@ -33,9 +33,9 @@
                         <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
                     
-                    <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">My Philosophy</h3>
+                    <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">{{ __('My Philosophy') }}</h3>
                     <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed font-light">
-                        I believe that code is a tool for storytelling. Every project is an opportunity to solve a unique problem and create a seamless experience for the user. I prioritize clean architecture, performance, and modern minimalist design in every project I build.
+                        {{ __('I believe that code is a tool for storytelling. Every project is an opportunity to solve a unique problem and create a seamless experience for the user. I prioritize clean architecture, performance, and modern minimalist design in every project I build.') }}
                     </p>
                 </div>
 
@@ -48,7 +48,7 @@
                         <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
                     </div>
 
-                    <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">My Stack</h3>
+                    <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">{{ __('My Stack') }}</h3>
                     <div class="flex flex-wrap gap-3">
                         @php
                             $tech = [

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', $locale ?? app()->getLocale()) }}" 
-      dir="{{ ($rtl ?? false) ? 'rtl' : 'ltr' }}"
-      x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) }" 
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
+      x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" 
       :class="{ 'dark': darkMode }"
 >
 
@@ -23,7 +23,7 @@
 
     <!-- Dark Mode Initializer (Prevents Flicker) -->
     <script>
-        if (localStorage.getItem('darkMode') === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (localStorage.getItem('darkMode') === 'true') {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');

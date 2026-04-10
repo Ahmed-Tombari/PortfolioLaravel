@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}"
+      x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" 
+      :class="{ 'dark': darkMode }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +11,15 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @yield('styles')
+
+    <!-- Dark Mode Initializer -->
+    <script>
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     <style>
         :root {
             --sidebar-bg: #0f0c29;
@@ -24,6 +36,12 @@
         body {
             font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
             background: #f0f2ff;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .dark body {
+            background: #0b0f1a;
+            color: #f1f5f9;
         }
 
         /* ═══ SCROLLBAR ═══ */
@@ -33,16 +51,29 @@
 
         /* ═══ SIDEBAR ═══ */
         .sidebar {
-            background: linear-gradient(160deg, #0f0c29 0%, #151033 40%, #1a0a3b 70%, #0d1b4b 100%);
+            background: #ffffff;
             position: relative;
+            border-right: 1px solid rgba(99,102,241,0.08);
+            transition: background 0.3s, border 0.3s;
         }
+
+        .dark .sidebar {
+            background: linear-gradient(160deg, #0f0c29 0%, #151033 40%, #1a0a3b 70%, #0d1b4b 100%);
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+
         .sidebar::before {
             content: '';
             position: absolute;
             inset: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(168,85,247,0.05) 0%, transparent 60%);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .dark .sidebar::before {
             background: radial-gradient(ellipse at 30% 20%, rgba(168,85,247,0.15) 0%, transparent 60%),
                         radial-gradient(ellipse at 70% 80%, rgba(99,102,241,0.12) 0%, transparent 55%);
-            pointer-events: none;
+            opacity: 1;
         }
 
         /* ═══ LOGO ═══ */
@@ -73,9 +104,12 @@
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: rgba(167,139,250,0.5);
+            color: #64748b;
             padding: 0 12px;
             margin-bottom: 6px;
+        }
+        .dark .nav-section-label {
+            color: rgba(167,139,250,0.5);
         }
 
         /* ═══ SIDEBAR LINKS ═══ */
@@ -87,11 +121,14 @@
             border-radius: 12px;
             font-size: 13.5px;
             font-weight: 500;
-            color: rgba(203,213,253,0.65);
+            color: #475569;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             text-decoration: none;
+        }
+        .dark .sidebar-link {
+            color: rgba(203,213,253,0.65);
         }
         .sidebar-link::before {
             content: '';
@@ -103,8 +140,13 @@
             transition: opacity 0.25s;
         }
         .sidebar-link:hover {
-            color: #e0d7ff;
+            color: #7c3aed;
             transform: translateX(3px);
+            background: rgba(124, 58, 237, 0.04);
+        }
+        .dark .sidebar-link:hover {
+            color: #e0d7ff;
+            background: transparent;
         }
         .sidebar-link:hover::before { opacity: 1; }
 
@@ -114,13 +156,23 @@
         }
 
         .sidebar-link.active {
+            background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(99,102,241,0.05));
+            color: #7c3aed;
+            font-weight: 600;
+            border: 1px solid rgba(168,85,247,0.1);
+            box-shadow: 0 4px 12px rgba(168,85,247,0.05);
+        }
+        .dark .sidebar-link.active {
             background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(99,102,241,0.2));
             color: #f3e8ff;
-            font-weight: 600;
-            border: 1px solid rgba(168,85,247,0.25);
+            border-color: rgba(168,85,247,0.25);
             box-shadow: 0 4px 24px rgba(168,85,247,0.15), inset 0 1px 0 rgba(255,255,255,0.08);
         }
         .sidebar-link.active .nav-icon {
+            color: #7c3aed;
+            filter: drop-shadow(0 0 8px rgba(124,58,237,0.3));
+        }
+        .dark .sidebar-link.active .nav-icon {
             color: #d8b4fe;
             filter: drop-shadow(0 0 8px rgba(216,180,254,0.7));
         }
@@ -137,8 +189,11 @@
         .nav-icon {
             width: 20px; height: 20px;
             flex-shrink: 0;
-            color: rgba(139,130,230,0.7);
+            color: #94a3b8;
             transition: all 0.25s;
+        }
+        .dark .nav-icon {
+            color: rgba(139,130,230,0.7);
         }
 
         /* ═══ BADGE ═══ */
@@ -158,6 +213,13 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(99,102,241,0.1);
             box-shadow: 0 1px 16px rgba(99,102,241,0.06);
+            transition: background 0.3s, border 0.3s;
+        }
+
+        .dark .admin-header {
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         /* ═══ CRAFTABLE CARD ═══ */
@@ -167,6 +229,11 @@
             border-radius: 20px;
             box-shadow: 0 2px 16px rgba(99,102,241,0.06);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .craftable-card {
+            background: #1e293b;
+            border-color: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
         }
         .craftable-card:hover {
             box-shadow: 0 8px 32px rgba(99,102,241,0.12);
@@ -238,6 +305,11 @@
             transition: all 0.25s;
             outline: none;
         }
+        .dark .aurora-input {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
         .aurora-input:focus {
             border-color: #a855f7;
             background: white;
@@ -252,6 +324,9 @@
             color: #475569;
             margin-bottom: 6px;
             letter-spacing: 0.01em;
+        }
+        .dark .aurora-label {
+            color: #94a3b8;
         }
 
         /* ═══ BUTTONS ═══ */
@@ -320,6 +395,11 @@
             background: linear-gradient(135deg, #faf5ff, #f0f2ff);
             border-bottom: 2px solid #e8e3ff;
         }
+        .dark table thead th {
+            background: linear-gradient(135deg, #2e1065, #1e1b4b);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+            color: #c084fc;
+        }
         table tbody td {
             padding: 14px 20px;
             font-size: 14px;
@@ -327,8 +407,13 @@
             border-bottom: 1px solid #f1f5f9;
             transition: background 0.18s;
         }
+        .dark table tbody td {
+            color: #cbd5e1;
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
         table tbody tr:last-child td { border-bottom: 0; }
         table tbody tr:hover td { background: #faf7ff; }
+        .dark table tbody tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
         /* ═══ ANIMATIONS ═══ */
         @keyframes fadeInUp {
@@ -436,8 +521,9 @@
         .main-scroll { overflow-y: auto; overflow-x: hidden; }
     </style>
 </head>
-<body class="antialiased bg-[#f0f2ff] text-slate-900 flex h-screen overflow-hidden"
-    x-data="{ sidebarOpen: false }">
+<body class="antialiased bg-[#f0f2ff] dark:bg-[#0b0f1a] text-slate-900 dark:text-slate-100 flex h-screen overflow-hidden"
+    x-data="{ sidebarOpen: false }"
+    x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))">
 
     <!-- Mobile Overlay -->
     <div x-show="sidebarOpen" x-transition.opacity
@@ -446,27 +532,27 @@
 
     <!-- ═══ SIDEBAR ═══ -->
     <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-           class="sidebar fixed inset-y-0 left-0 z-30 w-[260px] flex flex-col border-r border-white/5 transition-transform duration-300 lg:static lg:translate-x-0 shadow-2xl shrink-0">
+           class="sidebar fixed inset-y-0 left-0 z-30 w-[260px] flex flex-col border-r border-slate-200 dark:border-white/5 transition-transform duration-300 lg:static lg:translate-x-0 shadow-2xl shrink-0">
 
         <!-- Mobile Close -->
         <button @click="sidebarOpen = false"
-                class="lg:hidden absolute top-5 right-5 p-2 rounded-xl bg-white/10 text-white/60 hover:text-white hover:bg-white/15 transition-all">
+                class="lg:hidden absolute top-5 right-5 p-2 rounded-xl bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-white/60 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/15 transition-all">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
 
         <!-- Logo Area -->
-        <div class="flex items-center gap-3.5 h-[70px] px-5 border-b border-white/8 shrink-0 relative z-10">
+        <div class="flex items-center gap-3.5 h-[70px] px-5 border-b border-slate-100 dark:border-white/8 shrink-0 relative z-10">
             <div class="logo-icon">✦</div>
             <div class="hidden lg:block">
-                <p class="font-bold text-white text-[15px] leading-none">Studio</p>
-                <p class="text-[11px] text-purple-300/70 font-medium mt-0.5">Admin Panel</p>
+                <p class="font-bold text-slate-800 dark:text-white text-[15px] leading-none">{{ __('Studio') }}</p>
+                <p class="text-[11px] text-slate-500 dark:text-purple-300/70 font-medium mt-0.5">{{ __('Admin Panel') }}</p>
             </div>
         </div>
 
         <!-- Navigation -->
         <nav class="flex-1 overflow-y-auto px-3 py-5 space-y-0.5 relative z-10">
 
-            <p class="nav-section-label mb-3">Main</p>
+            <p class="nav-section-label mb-3">{{ __('Main') }}</p>
 
             <a href="{{ route('admin.dashboard') }}"
                class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -474,11 +560,11 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 9.75L12 3l9 6.75V21a.75.75 0 01-.75.75H3.75A.75.75 0 013 21V9.75z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 21V12h6v9"/>
                 </svg>
-                <span>Dashboard</span>
+                <span>{{ __('Dashboard') }}</span>
             </a>
 
             <div class="pt-4 pb-1">
-                <p class="nav-section-label">Content</p>
+                <p class="nav-section-label">{{ __('Content') }}</p>
             </div>
 
             <a href="{{ route('admin.hero.index') }}"
@@ -486,7 +572,7 @@
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
                 </svg>
-                <span>Hero Section</span>
+                <span>{{ __('Hero Section') }}</span>
             </a>
 
             <a href="{{ route('admin.category.index') }}"
@@ -495,7 +581,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 6h.008v.008H6V6z"/>
                 </svg>
-                <span>Categories</span>
+                <span>{{ __('Categories') }}</span>
                 @php $catCount = \App\Models\Category::count(); @endphp
                 @if($catCount > 0)
                 <span class="nav-badge">{{ $catCount }}</span>
@@ -507,7 +593,7 @@
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-9 5.25-9-5.25v-2.25"/>
                 </svg>
-                <span>Projects</span>
+                <span>{{ __('Projects') }}</span>
                 @php $prodCount = \App\Models\Product::count(); @endphp
                 @if($prodCount > 0)
                 <span class="nav-badge">{{ $prodCount }}</span>
@@ -515,31 +601,31 @@
             </a>
 
             <div class="pt-4 pb-1">
-                <p class="nav-section-label">Settings</p>
+                <p class="nav-section-label">{{ __('Settings') }}</p>
             </div>
 
             <a href="{{ route('home') }}" target="_blank" class="sidebar-link">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
                 </svg>
-                <span>View Website</span>
+                <span>{{ __('View Website') }}</span>
                 <svg class="ml-auto w-3 h-3 text-purple-400/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
 
         </nav>
 
         <!-- Sidebar Footer -->
-        <div class="p-4 border-t border-white/8 shrink-0 relative z-10">
-            <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition-all cursor-pointer group">
+        <div class="p-4 border-t border-slate-100 dark:border-white/8 shrink-0 relative z-10">
+            <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-white/5 transition-all cursor-pointer group">
                 <div class="sidebar-avatar">{{ substr(Auth::user()->name, 0, 1) }}</div>
                 <div class="min-w-0 flex-1">
-                    <p class="text-[13px] font-semibold text-white/90 truncate">{{ Auth::user()->name }}</p>
-                    <p class="text-[11px] text-purple-300/60 font-medium">Administrator</p>
+                    <p class="text-[13px] font-semibold text-slate-800 dark:text-white/90 truncate">{{ Auth::user()->name }}</p>
+                    <p class="text-[11px] text-slate-500 dark:text-purple-300/60 font-medium">{{ __('Administrator') }}</p>
                 </div>
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
-                    <button type="submit" title="Logout"
-                            class="p-1.5 rounded-lg text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-all">
+                    <button type="submit" title="{{ __('Logout') }}"
+                            class="p-1.5 rounded-lg text-slate-400 dark:text-white/30 hover:text-red-400 dark:hover:text-red-400 hover:bg-red-500/10 transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                     </button>
                 </form>
@@ -573,17 +659,46 @@
             <div class="flex items-center gap-4">
                 <div class="status-online">
                     <span class="status-dot"></span>
-                    <span>System Online</span>
+                    <span>{{ __('System Online') }}</span>
                 </div>
 
-                <div class="w-px h-6 bg-slate-200 hidden md:block"></div>
+                <div class="w-px h-6 bg-slate-200 dark:bg-slate-800 hidden md:block"></div>
+
+                <!-- Dark Mode Toggle -->
+                <button @click="darkMode = !darkMode" 
+                        class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-purple-600 transition-all duration-300 border border-transparent">
+                    <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                    <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                </button>
+
+                <!-- Language Switcher -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" 
+                            class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-purple-600 transition-all duration-300 border border-transparent flex items-center gap-1.5">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.298 6 18" /></svg>
+                        <span class="text-xs font-bold uppercase">{{ app()->getLocale() }}</span>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-2xl py-2 px-2 z-[60]">
+                        <a href="{{ route('set.locale', ['locale' => 'en']) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'en' ? 'text-purple-600 bg-purple-50 dark:bg-purple-900/20' : 'text-slate-600 dark:text-slate-300' }}">
+                            <span>🇺🇸</span> {{ __('English') }}
+                        </a>
+                        <a href="{{ route('set.locale', ['locale' => 'fr']) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'fr' ? 'text-purple-600 bg-purple-50 dark:bg-purple-900/20' : 'text-slate-600 dark:text-slate-300' }}">
+                            <span>🇫🇷</span> {{ __('French') }}
+                        </a>
+                        <a href="{{ route('set.locale', ['locale' => 'ar']) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-semibold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'ar' ? 'text-purple-600 bg-purple-50 dark:bg-purple-900/20' : 'text-slate-600 dark:text-slate-300' }}">
+                            <span>🇸🇦</span> {{ __('Arabic') }}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="w-px h-6 bg-slate-200 dark:bg-slate-800 hidden md:block"></div>
 
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
                     <button type="submit"
-                            class="flex items-center gap-2 text-sm text-slate-500 hover:text-purple-600 transition-colors font-semibold px-3 py-1.5 rounded-xl hover:bg-purple-50">
+                            class="flex items-center gap-2 text-sm text-slate-500 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold px-3 py-1.5 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/10">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                        Logout
+                        {{ __('Logout') }}
                     </button>
                 </form>
             </div>

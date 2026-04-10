@@ -34,7 +34,7 @@
                             class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-primary-600 transition-all duration-300 border border-transparent flex items-center gap-1.5"
                             aria-label="Language Switcher">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.298 6 18" /></svg>
-                        <span class="text-xs font-bold uppercase">{{ $locale }}</span>
+                        <span class="text-xs font-bold uppercase">{{ app()->getLocale() }}</span>
                     </button>
                     <!-- Dropdown Menu -->
                     <div x-show="open" 
@@ -43,23 +43,14 @@
                          x-transition:enter-start="opacity-0 translate-y-2 scale-95"
                          x-transition:enter-end="opacity-100 translate-y-0 scale-100"
                          class="absolute right-0 mt-2 w-48 glass-card rounded-2xl overflow-hidden focus:outline-none py-2 px-2 z-[60]">
-                        <a href="{{ route('set.locale', ['locale' => 'en', 'rtl' => $rtl]) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ $locale == 'en' ? 'text-primary-600 bg-primary-50 dark:bg-primary-950/30' : 'text-slate-600 dark:text-slate-300' }}">
+                        <a href="{{ route('set.locale', ['locale' => 'en']) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'en' ? 'text-primary-600 bg-primary-50 dark:bg-primary-950/30' : 'text-slate-600 dark:text-slate-300' }}">
                             <span class="text-base">🇺🇸</span> English
                         </a>
-                        <a href="{{ route('set.locale', ['locale' => 'fr', 'rtl' => $rtl]) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ $locale == 'fr' ? 'text-primary-600 bg-primary-50 dark:bg-primary-950/30' : 'text-slate-600 dark:text-slate-300' }}">
+                        <a href="{{ route('set.locale', ['locale' => 'fr']) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'fr' ? 'text-primary-600 bg-primary-50 dark:bg-primary-950/30' : 'text-slate-600 dark:text-slate-300' }}">
                             <span class="text-base">🇫🇷</span> Français
                         </a>
-                        <div class="border-t border-slate-200 dark:border-slate-800 my-2"></div>
-                        <a href="{{ route('set.locale', ['locale' => $locale, 'rtl' => !$rtl]) }}" class="flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300">
-                            <span class="flex items-center gap-3">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-                                RTL Mode
-                            </span>
-                            <div class="w-4 h-4 rounded border {{ $rtl ? 'bg-primary-600 border-primary-600 shadow-sm' : 'border-slate-300 dark:border-slate-700' }}">
-                                @if($rtl)
-                                    <svg class="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
-                                @endif
-                            </div>
+                        <a href="{{ route('set.locale', ['locale' => 'ar']) }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors {{ app()->getLocale() == 'ar' ? 'text-primary-600 bg-primary-50 dark:bg-primary-950/30' : 'text-slate-600 dark:text-slate-300' }}">
+                            <span class="text-base">🇸🇦</span> العربية
                         </a>
                     </div>
                 </div>
@@ -114,17 +105,14 @@
                 <span class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">{{ __('Appearance') }}</span>
                 <div class="flex items-center gap-2">
                     <!-- Language Selection in Mobile -->
-                    <a href="{{ route('set.locale', ['locale' => $locale == 'en' ? 'fr' : 'en', 'rtl' => $rtl]) }}" class="px-2 py-1 text-xs font-bold border border-slate-200 dark:border-slate-800 rounded-lg text-slate-500 uppercase">
-                        {{ $locale == 'en' ? 'FR' : 'EN' }}
+                    <a href="{{ route('set.locale', ['locale' => app()->getLocale() == 'en' ? 'fr' : (app()->getLocale() == 'fr' ? 'ar' : 'en')]) }}" class="px-2 py-1 text-xs font-bold border border-slate-200 dark:border-slate-800 rounded-lg text-slate-500 uppercase">
+                        {{ app()->getLocale() == 'en' ? 'FR' : (app()->getLocale() == 'fr' ? 'AR' : 'EN') }}
                     </a>
                     <button @click="darkMode = !darkMode" 
                             class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
                         <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
                         <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                     </button>
-                    <a href="{{ route('set.locale', ['locale' => $locale, 'rtl' => !$rtl]) }}" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 {{ $rtl ? 'text-primary-600' : '' }}">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-                    </a>
                 </div>
             </div>
 
@@ -148,24 +136,6 @@
                 @endauth
             @endif
         </div>
-    </div>
-</nav>
-
-            
-            <hr class="border-slate-200 dark:border-slate-800 my-2">
-            
-            @if (Route::has('login'))
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="block px-4 py-3 text-base font-medium text-primary-600">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="block px-4 py-3 text-base font-medium text-slate-600 dark:text-slate-300">Log in</a>
-                    @if (Route::has('register'))
-                        <div class="px-4 py-3">
-                            <a href="{{ route('register') }}" class="btn-primary w-full shadow-none">Get Started</a>
-                        </div>
-                    @endif
-                @endauth
-            @endif
         </div>
     </div>
 </nav>

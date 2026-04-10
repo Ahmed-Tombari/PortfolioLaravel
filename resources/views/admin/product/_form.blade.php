@@ -1,7 +1,7 @@
 @php
     $isEdit = isset($product);
     $formAction = $isEdit ? route('admin.product.update', $product->id) : route('admin.product.store');
-    $pageTitle = $isEdit ? 'Edit Project' : 'New Project';
+    $pageTitle = $isEdit ? __('Edit Project') : __('New Project');
 @endphp
 @extends('admin.layout.main')
 @section('page_title', $pageTitle)
@@ -54,7 +54,7 @@ select.admin-input { cursor: pointer; }
     <a href="{{ route('admin.product.index') }}"
        class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-violet-600 transition-colors group">
         <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-        Back to projects
+        {{ __('Back to projects') }}
     </a>
 
     <form action="{{ $formAction }}" method="POST" enctype="multipart/form-data">
@@ -71,8 +71,8 @@ select.admin-input { cursor: pointer; }
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                         </div>
                         <div>
-                            <h3 class="text-base font-bold text-slate-800">Basic Information</h3>
-                            <p class="text-xs text-slate-400 mt-0.5">Fill in the core details for your project</p>
+                            <h3 class="text-base font-bold text-slate-800">{{ __('Basic Information') }}</h3>
+                            <p class="text-xs text-slate-400 mt-0.5">{{ __('Fill in the core details for your project') }}</p>
                         </div>
                     </div>
 
@@ -80,12 +80,12 @@ select.admin-input { cursor: pointer; }
                         {{-- Title --}}
                         <div>
                             <label class="aurora-label">
-                                Project Title <span class="text-rose-500">*</span>
+                                {{ __('Project Title') }} <span class="text-rose-500">*</span>
                             </label>
                             <input type="text" name="title"
                                    value="{{ old('title', $product->title ?? '') }}"
                                    class="admin-input @error('title') error @enderror"
-                                   placeholder="e.g., Luxury Watch Marketplace"
+                                   placeholder="{{ __('e.g., Luxury Watch Marketplace') }}"
                                    required>
                             @error('title')
                             <p class="flex items-center gap-1.5 text-xs text-rose-500 font-medium mt-1.5">
@@ -98,13 +98,13 @@ select.admin-input { cursor: pointer; }
                         {{-- Category --}}
                         <div>
                             <label class="aurora-label">
-                                Category <span class="text-rose-500">*</span>
+                                {{ __('Category') }} <span class="text-rose-500">*</span>
                             </label>
                             <div class="relative">
                                 <select name="category_id"
                                         class="admin-input appearance-none pr-10 @error('category_id') error @enderror"
                                         required>
-                                    <option value="">Select a category...</option>
+                                    <option value="">{{ __('Select a category...') }}</option>
                                     @foreach($categories as $category)
                                     <option value="{{ $category->id }}"
                                         {{ old('category_id', $product->category_id ?? '') == $category->id ? 'selected' : '' }}>
@@ -124,11 +124,11 @@ select.admin-input { cursor: pointer; }
                         {{-- Description --}}
                         <div>
                             <label class="aurora-label">
-                                Description <span class="text-rose-500">*</span>
+                                {{ __('Description') }} <span class="text-rose-500">*</span>
                             </label>
                             <textarea name="description" rows="7"
                                       class="admin-input resize-none @error('description') error @enderror"
-                                      placeholder="Describe your project in detail — tools used, goals, outcome..."
+                                      placeholder="{{ __('Describe your project in detail — tools used, goals, outcome...') }}"
                                       required>{{ old('description', $product->description ?? '') }}</textarea>
                             @error('description')
                             <p class="text-xs text-rose-500 font-medium mt-1.5">{{ $message }}</p>
@@ -140,15 +140,15 @@ select.admin-input { cursor: pointer; }
                 {{-- Submit Bar --}}
                 <div class="craftable-card px-6 py-4 flex items-center justify-between gap-4">
                     <a href="{{ route('admin.product.index') }}" class="btn-secondary">
-                        Cancel
+                        {{ __('Cancel') }}
                     </a>
                     <button type="submit" class="btn-primary">
                         @if($isEdit)
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                            Save Changes
+                            {{ __('Save Changes') }}
                         @else
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                            Create Project
+                            {{ __('Create Project') }}
                         @endif
                     </button>
                 </div>
@@ -162,20 +162,20 @@ select.admin-input { cursor: pointer; }
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
                         </div>
                         <div>
-                            <h3 class="text-base font-bold text-slate-800">Media</h3>
-                            <p class="text-xs text-slate-400 mt-0.5">Project cover image</p>
+                            <h3 class="text-base font-bold text-slate-800">{{ __('Media') }}</h3>
+                            <p class="text-xs text-slate-400 mt-0.5">{{ __('Project cover image') }}</p>
                         </div>
                     </div>
 
                     {{-- Current Image (Edit) --}}
                     @if($isEdit && $product->image)
                     <div class="mb-4">
-                        <label class="aurora-label mb-2">Current Image</label>
+                        <label class="aurora-label mb-2">{{ __('Current Image') }}</label>
                         <div class="rounded-2xl overflow-hidden border border-slate-100 aspect-video bg-slate-50 shadow-sm">
                             <img src="{{ asset('storage/' . $product->image) }}"
                                  class="w-full h-full object-cover" alt="{{ $product->title }}">
                         </div>
-                        <p class="text-xs text-slate-400 text-center mt-2">Upload a new image to replace it</p>
+                        <p class="text-xs text-slate-400 text-center mt-2">{{ __('Upload a new image to replace it') }}</p>
                     </div>
                     @endif
 
@@ -196,7 +196,7 @@ select.admin-input { cursor: pointer; }
                         <div x-show="previewUrl" class="relative">
                             <img :src="previewUrl" class="w-full h-40 object-cover rounded-[14px]">
                             <div class="absolute inset-0 bg-black/40 rounded-[14px] flex items-center justify-center">
-                                <span class="text-white text-xs font-semibold bg-black/30 px-3 py-1 rounded-full">Click to change</span>
+                                <span class="text-white text-xs font-semibold bg-black/30 px-3 py-1 rounded-full">{{ __('Click to change') }}</span>
                             </div>
                         </div>
 
@@ -208,8 +208,8 @@ select.admin-input { cursor: pointer; }
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-sm font-semibold text-slate-700" x-text="fileName ?? 'Click or drag to upload'"></p>
-                                <p class="text-xs text-slate-400 mt-0.5" x-show="!fileName">PNG, JPG, WEBP — max 2MB</p>
+                                <p class="text-sm font-semibold text-slate-700" x-text="fileName ?? '{{ __('Click or drag to upload') }}'"></p>
+                                <p class="text-xs text-slate-400 mt-0.5" x-show="!fileName">{{ __('PNG, JPG, WEBP — max 2MB') }}</p>
                             </div>
                         </div>
                     </div>
@@ -229,11 +229,11 @@ select.admin-input { cursor: pointer; }
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-slate-700 mb-1">Image Tips</p>
+                            <p class="text-xs font-bold text-slate-700 mb-1">{{ __('Image Tips') }}</p>
                             <ul class="text-xs text-slate-500 space-y-1">
-                                <li>• Use 16:9 ratio for best display</li>
-                                <li>• Minimum 800×450px recommended</li>
-                                <li>• WEBP format for faster loading</li>
+                                <li>• {{ __('Use 16:9 ratio for best display') }}</li>
+                                <li>• {{ __('Minimum 800×450px recommended') }}</li>
+                                <li>• {{ __('WEBP format for faster loading') }}</li>
                             </ul>
                         </div>
                     </div>

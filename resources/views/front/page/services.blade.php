@@ -1,6 +1,6 @@
 @extends('front.layout.main')
 
-@section('title', 'Expert Services')
+@section('title', __('Expert Services'))
 
 @section('content')
     {{-- ─── Services Hero ─── --}}
@@ -10,10 +10,10 @@
         </div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <span class="hero-fade-in block text-sm font-semibold uppercase tracking-widest text-primary-600 mb-6" style="animation-delay:0.1s">How I can Help</span>
+            <span class="hero-fade-in block text-sm font-semibold uppercase tracking-widest text-primary-600 mb-6" style="animation-delay:0.1s">{{ __('How I can Help') }}</span>
             <h1 class="hero-fade-in text-5xl sm:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 leading-tight" style="animation-delay:0.2s">
-                Full-Stack Expertise <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-400 dark:from-primary-400 dark:to-indigo-300">Delivered.</span>
+                {{ __('Full-Stack Expertise') }} <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-indigo-400 dark:from-primary-400 dark:to-indigo-300">{{ __('Delivered.') }}</span>
             </h1>
         </div>
     </section>
@@ -25,27 +25,27 @@
                 @php
                     $detailedServices = [
                         [
-                            'title' => 'Custom Web Applications',
+                            'title' => __('Custom Web Applications'),
                             'tags' => ['Laravel', 'Vue.js', 'API Design'],
-                            'desc' => 'Tailor-made software solutions built from the ground up. I focus on performance, security, and scalability to ensure your business logic is robust and manageable.',
+                            'desc' => __('Tailor-made software solutions built from the ground up. I focus on performance, security, and scalability to ensure your business logic is robust and manageable.'),
                             'image' => 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800'
                         ],
                         [
-                            'title' => 'Premium E-Commerce',
+                            'title' => __('Premium E-Commerce'),
                             'tags' => ['Stripe', 'State Management', 'Inventory'],
-                            'desc' => 'High-conversion shopping experiences with seamless checkout flows and intelligent inventory management systems.',
+                            'desc' => __('High-conversion shopping experiences with seamless checkout flows and intelligent inventory management systems.'),
                             'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800'
                         ],
                         [
-                            'title' => 'UI/UX Visual Systems',
+                            'title' => __('UI/UX Visual Systems'),
                             'tags' => ['Figma', 'Prototyping', 'Design Tokens'],
-                            'desc' => 'More than just "pretty" design. I build comprehensive visual systems that enhance user engagement and establish brand authority.',
+                            'desc' => __('More than just "pretty" design. I build comprehensive visual systems that enhance user engagement and establish brand authority.'),
                             'image' => 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&w=800'
                         ],
                         [
-                            'title' => 'Speed & Performance Audit',
+                            'title' => __('Speed & Performance Audit'),
                             'tags' => ['Core Web Vitals', 'Optimization', 'SEO'],
-                            'desc' => 'Is your site slow? I perform deep audits and optimization sprints to get your Core Web Vitals into the green zone.',
+                            'desc' => __('Is your site slow? I perform deep audits and optimization sprints to get your Core Web Vitals into the green zone.'),
                             'image' => 'https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&w=800'
                         ]
                     ];
@@ -65,7 +65,7 @@
                             <img src="{{ $s['image'] }}" 
                                  alt="{{ $s['title'] }}" 
                                  class="w-full h-full object-cover"
-                                 onerror="this.src='https://placehold.co/800x600/312e81/ffffff?text=Service+Preview'">
+                                 onerror="this.src='https://placehold.co/800x600/312e81/ffffff?text={{ urlencode($s['title']) }}'">
                         </div>
                     </div>
                 </div>
@@ -80,9 +80,9 @@
             <div class="bg-primary-600 rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl">
                 <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent"></div>
                 <div class="relative z-10">
-                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight">Need a custom solution?</h2>
-                    <p class="text-primary-100 text-lg md:text-xl font-light max-w-2xl mx-auto mb-12">Let's discuss your next project and see how my expertise can help your business grow.</p>
-                    <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-10 py-4 bg-white text-primary-600 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl transition-transform hover:scale-105 active:scale-95">Get a Free Quote</a>
+                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight">{{ __('Need a custom solution?') }}</h2>
+                    <p class="text-primary-100 text-lg md:text-xl font-light max-w-2xl mx-auto mb-12">{{ __('Let\'s discuss your next project and see how my expertise can help your business grow.') }}</p>
+                    <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-10 py-4 bg-white text-primary-600 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl transition-transform hover:scale-105 active:scale-95">{{ __('Get a Free Quote') }}</a>
                 </div>
             </div>
         </div>
